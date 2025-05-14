@@ -33,7 +33,7 @@ interface TopProductsProps {
 }
 const TopProducts: React.FC<TopProductsProps> = ({ handleOrderPopup }) => {
   return (
-    <div>
+    <div id="toprate" className="py-10">
       <div className="container">
         {/* Header section */}
         <div className="text-left mb-24">

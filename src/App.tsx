@@ -1,5 +1,5 @@
 // src/App.tsx
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -15,6 +15,7 @@ import Register from "./pages/Register";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
+  const [cartCount, setCartCount] = useState(0);
 
   const handleOrderPopup = () => {
     setOrderPopup(!orderPopup);
@@ -32,7 +33,7 @@ const App = () => {
   return (
     <Router>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200">
-        <Navbar handleOrderPopup={handleOrderPopup} />
+        <Navbar cartCount={cartCount} handleOrderPopup={handleOrderPopup} />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
