@@ -58,6 +58,7 @@ type NavbarProps = {
 
 const Navbar = ({ handleOrderPopup }: NavbarProps) => {
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -93,10 +94,10 @@ const Navbar = ({ handleOrderPopup }: NavbarProps) => {
       <div className="bg-primary/40 py-2">
         <div className="container flex justify-between items-center">
           <div>
-            <a href="#" className="font-bold text-2xl sm:text-3xl flex gap-2">
+            <Link to="#" className="font-bold text-2xl sm:text-3xl flex gap-2">
               <img src={Logo} alt="Logo" className="w-10" />
               Shopsy
-            </a>
+            </Link>
           </div>
 
           {/* search bar */}
@@ -126,12 +127,52 @@ const Navbar = ({ handleOrderPopup }: NavbarProps) => {
               <DarkMode />
             </div>
 
+            {/* Hamburger Menu for Mobile */}
+            <div className="md:hidden flex items-center">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="focus:outline-none p-2"
+              >
+                {mobileMenuOpen ? (
+                  <svg
+                    className="w-6 h-6 text-gray-800 dark:text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    className="w-6 h-6 text-gray-800 dark:text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+                )}
+              </button>
+            </div>
+
             {/* Auth Buttons */}
             <div className="flex gap-2">
-              <Link to="/login" className="text-sm px-3 py-1 rounded-full border border-primary text-primary dark:bg-gray-900 dark:text-white hover:bg-primary hover:text-white transition">
+              <Link to="/login" className="md:flex hidden text-sm px-3 py-1 rounded-full border border-primary text-primary dark:bg-gray-900 dark:text-white hover:bg-primary hover:text-white transition">
                 Đăng nhập
               </Link>
-              <Link to="/register" className="text-sm px-3 py-1 rounded-full border border-secondary text-secondary dark:bg-gray-900 dark:text-white hover:bg-secondary hover:text-white transition">
+              <Link to="/register" className="md:flex hidden text-sm px-3 py-1 rounded-full border border-secondary text-secondary dark:bg-gray-900 dark:text-white hover:bg-secondary hover:text-white transition">
                 Đăng ký
               </Link>
             </div>
@@ -140,35 +181,35 @@ const Navbar = ({ handleOrderPopup }: NavbarProps) => {
       </div>
       {/* lower Navbar */}
       <div data-aos="zoom-in" className="flex justify-center">
-        <ul className="sm:flex hidden items-center gap-4">
+        <ul className="md:flex hidden items-center gap-4">
           {Menu.map((data) => (
             <li key={data.id}>
-              <a
-                href={data.link}
+              <Link
+                to={data.link}
                 className="inline-block px-4 hover:text-primary duration-200"
               >
                 {data.name}
-              </a>
+              </Link>
             </li>
           ))}
           {/* Simple Dropdown and Links */}
           <li className="group relative cursor-pointer">
-            <a href="#" className="flex items-center gap-[2px] py-2">
+            <Link to="#" className="flex items-center gap-[2px] py-2">
               Trending Products
               <span>
                 <FaCaretDown className="transition-all duration-200 group-hover:rotate-180" />
               </span>
-            </a>
+            </Link>
             <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white p-2 text-black shadow-md">
               <ul>
                 {DropdownLinks.map((data) => (
                   <li key={data.id}>
-                    <a
-                      href={data.link}
+                    <Link
+                      to={data.link}
                       className="inline-block w-full rounded-md p-2 hover:bg-primary/20 "
                     >
                       {data.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -176,6 +217,26 @@ const Navbar = ({ handleOrderPopup }: NavbarProps) => {
           </li>
         </ul>
       </div>
+
+      {/* Mobile Auth Menu Dropdown */}
+      {mobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-gray-800 shadow-md z-40 py-4">
+          <div className="flex flex-col items-center gap-4">
+            <Link
+              to="/login"
+              className="text-lg font-medium text-gray-700 dark:text-white hover:text-primary"
+            >
+              Đăng nhập
+            </Link>
+            <Link
+              to="/register"
+              className="text-lg font-medium text-gray-700 dark:text-white hover:text-primary"
+            >
+              Đăng ký
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
