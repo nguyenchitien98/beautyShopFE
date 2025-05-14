@@ -6,6 +6,7 @@ import { FaCaretDown } from "react-icons/fa";
 import DarkMode from "./DarkMode";
 import { Link, useLocation } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
+import ScrollToTopButton from "./ScrollToTopButton";
 
 const Menu = [
   // { id: 1, name: "Trang chủ", routeTo: "/" },
@@ -198,6 +199,7 @@ const Navbar = ({ handleOrderPopup, cartCount }: NavbarProps) => {
       )}
 
       {breadcrumb}
+      <ScrollToTopButton />
     </div>
   );
 };
