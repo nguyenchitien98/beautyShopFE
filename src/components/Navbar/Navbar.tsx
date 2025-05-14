@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../assets/logo.png";
 import { IoMdSearch } from "react-icons/io";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaCaretDown } from "react-icons/fa";
 import DarkMode from "./DarkMode";
+import { Link } from "react-router-dom";
 
 const Menu = [
   {
@@ -56,8 +57,38 @@ type NavbarProps = {
 };
 
 const Navbar = ({ handleOrderPopup }: NavbarProps) => {
+
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  const controlNavbar = () => {
+    if (typeof window !== "undefined") {
+      if (window.scrollY > lastScrollY) {
+        // Scroll xuống
+        setShowNavbar(false);
+      } else {
+        // Scroll lên
+        setShowNavbar(true);
+      }
+      setLastScrollY(window.scrollY);
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", controlNavbar);
+      return () => {
+        window.removeEventListener("scroll", controlNavbar);
+      };
+    }
+  }, [lastScrollY]);
+
   return (
-    <div className="shadow-md bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
+    <div
+      className={`sticky top-0 z-50 duration-300 transition-transform ${
+        showNavbar ? "translate-y-0" : "-translate-y-full"
+      } shadow-md bg-white dark:bg-gray-900 dark:text-white`}
+    >
       {/* upper Navbar */}
       <div className="bg-primary/40 py-2">
         <div className="container flex justify-between items-center">
@@ -84,15 +115,25 @@ const Navbar = ({ handleOrderPopup }: NavbarProps) => {
               onClick={() => handleOrderPopup()}
               className="bg-gradient-to-r from-primary to-secondary transition-all duration-200 text-white  py-1 px-4 rounded-full flex items-center gap-3 group"
             >
-              <span className="group-hover:block hidden transition-all duration-200">
+              {/* <span className="group-hover:block hidden transition-all duration-200">
                 Order
-              </span>
+              </span> */}
               <FaCartShopping className="text-xl text-white drop-shadow-sm cursor-pointer" />
             </button>
 
             {/* Darkmode Switch */}
             <div>
               <DarkMode />
+            </div>
+
+            {/* Auth Buttons */}
+            <div className="flex gap-2">
+              <Link to="/login" className="text-sm px-3 py-1 rounded-full border border-primary text-primary dark:bg-gray-900 dark:text-white hover:bg-primary hover:text-white transition">
+                Đăng nhập
+              </Link>
+              <Link to="/register" className="text-sm px-3 py-1 rounded-full border border-secondary text-secondary dark:bg-gray-900 dark:text-white hover:bg-secondary hover:text-white transition">
+                Đăng ký
+              </Link>
             </div>
           </div>
         </div>

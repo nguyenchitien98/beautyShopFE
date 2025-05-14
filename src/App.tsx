@@ -9,6 +9,9 @@ import Navbar from "./components/Navbar/Navbar";
 import ProductPage from "./pages/ProductPage";
 import CartPage from "./pages/CartPage";
 import NotFound from "./pages/NotFound";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -32,8 +35,11 @@ const App = () => {
         <Navbar handleOrderPopup={handleOrderPopup} />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/detail" element={<ProductDetailPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
