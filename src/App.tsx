@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ScrollToTop from "./common/ScrollToTop";
 
 const App = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -34,6 +35,7 @@ const App = () => {
     <Router>
       <div className="bg-white dark:bg-gray-900 dark:text-white duration-200">
         <Navbar cartCount={cartCount} handleOrderPopup={handleOrderPopup} />
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />

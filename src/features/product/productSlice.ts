@@ -8,6 +8,7 @@ export interface Product {
   image: string;
   description?: string;
   averageRating: number;
+  discountPrice: number;
 }
 
 interface ProductState {
