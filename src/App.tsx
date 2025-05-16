@@ -7,7 +7,7 @@ import Footer from "./components/Footer/Footer";
 import HomePage from "./pages/HomePage";
 import Navbar from "./components/Navbar/Navbar";
 import ProductPage from "./pages/ProductPage";
-import CartPage from "./pages/CartPage";
+import CartPage from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import Login from "./pages/Login";
@@ -42,7 +42,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/products/detail" element={<ProductDetailPage />} />
+          <Route path="/product/detail/:id" element={<ProductDetailPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

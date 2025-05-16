@@ -40,20 +40,52 @@ const Navbar = ({ handleOrderPopup, cartCount }: NavbarProps) => {
     setMobileMenuOpen(false); // đóng menu sau khi chọn
   };
 
-  const breadcrumb =
-    currentPath !== "/" && (
-      <div className="container flex justify-start mt-4">
-          <Link
-            to="/"
-            className="text-primary hover:underline cursor-pointer"
-          >
-            Trang chủ
-          </Link>
-        <span className="mx-2">{">"}</span>
-        <span className="capitalize">{currentPath.replace("/", "").replace("-", " ")}</span>
+  const pathSegments = currentPath.split("/").filter(Boolean); // loại bỏ phần rỗng
+  // Xử lý: loại bỏ ID ở cuối nếu là số
+  const cleanSegments =
+  pathSegments.length > 0 && /^\d+$/.test(pathSegments[pathSegments.length - 1])
+  ? pathSegments.slice(0, -1)
+  : pathSegments;
+
+  // Mapping tiếng Việt và đường dẫn thực
+  const segmentMap: { [key: string]: { label: string; path?: string } } = {
+  product: { label: "Sản phẩm", path: "/products" }, // đúng route thực
+  detail: { label: "Chi tiết sản phẩm" },
+  cart: { label: "Giỏ hàng", path: "/cart" },
+  login: { label: "Đăng nhập", path: "/login" },
+  register: { label: "Đăng ký", path: "/register" },
+  // thêm các route khác nếu cần
+  };
+
+  const breadcrumb = currentPath !== "/" && (
+    <div className="container flex flex-wrap items-center gap-2 mt-4 text-sm">
+      <Link to="/" className="text-primary hover:underline cursor-pointer">
+        Trang chủ
+      </Link>
+      {cleanSegments.map((segment, index) => {
+        const isLast = index === cleanSegments.length - 1;
+        const pathTo = "/" + cleanSegments.slice(0, index + 1).join("/");
+        const mapEntry = segmentMap[segment];
+        const label = mapEntry?.label || segment;
   
-      </div>
-    );
+        return (
+          <React.Fragment key={index}>
+            <span className="mx-1">{">"}</span>
+            {isLast ? (
+              <span className="capitalize">{label}</span>
+            ) : (
+              <Link
+                to={mapEntry?.path || pathTo}
+                className="text-primary hover:underline capitalize"
+              >
+                {label}
+              </Link>
+            )}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
 
   return (
     <div className="sticky top-0 z-50 bg-white dark:bg-gray-900 dark:text-white shadow-md">

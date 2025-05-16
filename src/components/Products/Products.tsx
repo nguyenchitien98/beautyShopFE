@@ -1,6 +1,7 @@
 // src/components/Products/Products.tsx
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { RootState, AppDispatch } from '../../app/store';
 import { setProducts, setLoading, setError, Product } from '../../features/product/productSlice';
 import axios from 'axios';
@@ -9,6 +10,7 @@ import { FaStar } from 'react-icons/fa';
 const Products = () => {
   const dispatch: AppDispatch = useDispatch();
   const { products, loading, error } = useSelector((state: RootState) => state.product);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -72,7 +74,12 @@ const Products = () => {
                   {/* Hover buttons */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 space-x-2">
                     <button className="bg-primary text-white py-1 px-2 text-sm rounded">Order</button>
-                    <button className="bg-white text-primary py-1 px-2 text-sm rounded border border-primary">Chi tiết</button>
+                    <button
+                    onClick={() => navigate(`/product/detail/${product.id}`)}
+                    className="bg-white text-primary py-1 px-2 text-sm rounded border border-primary"
+                  >
+                    Chi tiết
+                  </button>
                   </div>
                 
                   {/* Product Info */}
