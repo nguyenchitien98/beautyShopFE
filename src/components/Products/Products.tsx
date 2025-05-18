@@ -16,7 +16,7 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         dispatch(setLoading(true));
-        const response = await axios.get('http://localhost:8080/api/products');
+        const response = await axios.get('http://localhost:8080/api/products/featured');
         console.log(response)
         const formatted: Product[] = response.data.data.map((item: any) => ({
           id: item.id,

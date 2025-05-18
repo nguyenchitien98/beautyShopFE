@@ -9,6 +9,7 @@ export interface Product {
   description?: string;
   averageRating: number;
   discountPrice: number;
+  categoryId: number;
 }
 
 interface ProductState {

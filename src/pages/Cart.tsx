@@ -37,7 +37,7 @@ const Cart = () => {
   }, [dispatch]);
 
   return (
-    <div className="container py-10">
+    <div className="min-h-screen container py-10">
       <h1 className="text-2xl font-bold mb-6">Giỏ hàng của bạn</h1>
       <div className="space-y-4">
         {items.map((item: CartItem) => (
